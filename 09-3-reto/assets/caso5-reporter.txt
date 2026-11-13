@@ -1,0 +1,19 @@
+Caso 5 - reporter: CreateContainerConfigError
+=============================================
+
+Diagnostico:
+
+   kubectl describe pod -n lab-09 -l app=reporter
+   -> Warning  Failed  ...  Error: configmap "reporter-config" not found
+
+   kubectl get configmap -n lab-09
+   -> el que existe se llama report-config
+
+Arreglo: en 05-reporter.yaml cambia configMapRef.name a report-config y aplica:
+
+   sed -i 's/name: reporter-config/name: report-config/' /root/lab/rotos/05-reporter.yaml
+   kubectl apply -f /root/lab/rotos/05-reporter.yaml
+   kubectl rollout status deployment/reporter -n lab-09
+   kubectl logs -n lab-09 deploy/reporter
+
+Alternativa valida: crear un ConfigMap con el nombre que espera el Deployment (reporter-config).

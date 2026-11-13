@@ -1,0 +1,22 @@
+Caso 3 - cache: Pending por un nodeSelector que ningun nodo cumple
+==================================================================
+
+Diagnostico:
+
+   kubectl describe pod -n lab-09 -l app=cache
+
+   Warning  FailedScheduling  default-scheduler  0/2 nodes are available: 1 node(s) didn't match
+   Pod's node affinity/selector, 1 node(s) had untolerated taint(s) ... (resumido)
+
+   kubectl get nodes -L disktype
+
+El Pod pide disktype: nvme y ningun nodo tiene ese label (node01 tiene disktype=ssd).
+Ademas controlplane tiene el taint de control-plane. El Pod no tiene IP ni nodo: nunca se programo.
+
+Arreglo: en 03-cache.yaml cambia disktype: nvme por disktype: ssd (o quita el nodeSelector) y aplica:
+
+   sed -i 's/disktype: nvme/disktype: ssd/' /root/lab/rotos/03-cache.yaml
+   kubectl apply -f /root/lab/rotos/03-cache.yaml
+   kubectl rollout status deployment/cache -n lab-09
+
+Variante que veras en otros clusteres: "Insufficient cpu", cuando los requests superan lo que queda libre.

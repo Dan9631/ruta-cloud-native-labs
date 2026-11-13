@@ -1,0 +1,19 @@
+Caso 4 - worker: OOMKilled
+==========================
+
+Diagnostico:
+
+   kubectl describe pod -n lab-09 -l app=worker
+   -> Last State: Terminated, Reason: OOMKilled, Exit Code: 137
+
+   kubectl logs -n lab-09 deploy/worker --previous
+   -> se corta justo despues de "cargando 64 MiB de datos en memoria..."
+
+Necesita mas de 64 MiB y su limite es 32Mi: el kernel lo mata al pasarse.
+
+Arreglo:
+
+   kubectl set resources deployment/worker -c worker --limits=memory=128Mi -n lab-09
+   kubectl rollout status deployment/worker -n lab-09
+
+(o cambia limits.memory a 128Mi en 04-worker.yaml y aplicalo)

@@ -1,0 +1,28 @@
+{
+  "title": "Módulo 09 (1 de 3) · Diagnóstico: get, describe, eventos y logs",
+  "description": "Despliega un namespace lleno de averías, aplica la metodología get → describe → events → logs y arregla el primer caso. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "Desplegar el desastre y mirar con get", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "Caso 1: describe, eventos y el arreglo", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "Logs, exec y un Pod cliente", "text": "step3/text.md", "verify": "step3/verify.sh" },
+      { "title": "port-forward: probar sin exponer nada", "text": "step4/text.md" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "*.yaml", "target": "/root/lab/rotos" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-2nodes"
+  }
+}

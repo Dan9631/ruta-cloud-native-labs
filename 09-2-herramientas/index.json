@@ -1,0 +1,28 @@
+{
+  "title": "Módulo 09 (2 de 3) · kubectl debug, top y salud del clúster",
+  "description": "Contenedor efímero, copia de un Pod que se cae, kubectl top, static pods del control plane, kubelet, journalctl y crictl. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "kubectl debug: contenedor efímero", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "kubectl debug: copia de un Pod que se cae", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "kubectl top y salud del control plane", "text": "step3/text.md", "verify": "step3/verify.sh" },
+      { "title": "El kubelet y el runtime, desde el nodo", "text": "step4/text.md", "verify": "step4/verify.sh" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "*.yaml", "target": "/root/lab/rotos" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-2nodes"
+  }
+}

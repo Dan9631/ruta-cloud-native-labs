@@ -1,0 +1,23 @@
+Solucion del reto del modulo 09
+===============================
+
+Cada caso tiene su archivo con el diagnostico y el arreglo:
+
+   cat /root/solucion/caso2-api.txt        CrashLoopBackOff: falta la variable DB_HOST
+   cat /root/solucion/caso3-cache.txt      Pending: nodeSelector disktype=nvme que ningun nodo cumple
+   cat /root/solucion/caso4-worker.txt     OOMKilled: limits.memory 32Mi para cargar 64 MiB
+   cat /root/solucion/caso5-reporter.txt   CreateContainerConfigError: ConfigMap con nombre equivocado
+   cat /root/solucion/caso6-shop.txt       liveness al puerto 8080 y Service con selector app=tienda
+
+Resumen de arreglos:
+
+   kubectl set env deployment/api DB_HOST=postgres.lab-09.svc.cluster.local -n lab-09
+   sed -i 's/disktype: nvme/disktype: ssd/' /root/lab/rotos/03-cache.yaml && kubectl apply -f /root/lab/rotos/03-cache.yaml
+   kubectl set resources deployment/worker -c worker --limits=memory=128Mi -n lab-09
+   sed -i 's/name: reporter-config/name: report-config/' /root/lab/rotos/05-reporter.yaml && kubectl apply -f /root/lab/rotos/05-reporter.yaml
+   kubectl apply -f /root/solucion/shop-arreglado.yaml
+
+Comprueba:
+
+   kubectl get deploy,pods -n lab-09
+   kubectl get endpointslices -n lab-09 -l kubernetes.io/service-name=shop

@@ -1,0 +1,26 @@
+Caso 2 - api: CrashLoopBackOff por una variable que falta
+=========================================================
+
+Diagnostico:
+
+   kubectl logs -n lab-09 deploy/api --previous
+
+   [api] iniciando...
+   [api] ERROR: la variable DB_HOST no esta definida. Abortando.
+
+   kubectl describe pod -n lab-09 -l app=api
+   -> Last State: Terminated, Reason: Error, Exit Code: 1 (error de la aplicacion, no un SIGKILL)
+
+Arreglo (anade la variable; cambia la plantilla y crea Pods nuevos sin reinicios):
+
+   kubectl set env deployment/api DB_HOST=postgres.lab-09.svc.cluster.local -n lab-09
+   kubectl rollout status deployment/api -n lab-09
+   kubectl logs -n lab-09 deploy/api
+
+Alternativa: anade al contenedor en 02-api.yaml
+
+          env:
+            - name: DB_HOST
+              value: postgres.lab-09.svc.cluster.local
+
+y aplica: kubectl apply -f /root/lab/rotos/02-api.yaml

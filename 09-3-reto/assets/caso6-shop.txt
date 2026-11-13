@@ -1,0 +1,40 @@
+Caso 6 - shop: dos fallos
+=========================
+
+1. Liveness mal configurada
+
+   kubectl get events -n lab-09 --sort-by=.lastTimestamp | grep shop
+   -> Liveness probe failed: Get "http://10.244.x.x:8080/": ... connection refused
+   -> Container web failed liveness probe, will be restarted
+
+   nginx escucha en el 80 y la sonda pregunta al 8080. Los logs de nginx no muestran
+   ningun error: la app estaba bien, la mataba el kubelet.
+
+2. Service sin endpoints
+
+   kubectl describe svc shop -n lab-09          -> Selector: app=tienda
+   kubectl get pods -n lab-09 --show-labels     -> los Pods tienen app=shop
+
+Arreglo en 06-shop.yaml (version corregida en /root/solucion/shop-arreglado.yaml):
+
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http        # antes: 8080
+   ...
+   spec:
+     selector:
+       app: shop                # antes: tienda
+
+   diff /root/lab/rotos/06-shop.yaml /root/solucion/shop-arreglado.yaml
+   kubectl apply -f /root/solucion/shop-arreglado.yaml
+   kubectl rollout status deployment/shop -n lab-09
+   kubectl get endpointslices -n lab-09 -l kubernetes.io/service-name=shop
+
+Comprueba desde dentro del cluster:
+
+   kubectl exec -n lab-09 deploy/frontend -- wget -qO- -T 3 http://shop
+
+Si algun Pod de otra app acumulo reinicios antes de tu arreglo:
+
+   kubectl rollout restart deployment/<nombre> -n lab-09
