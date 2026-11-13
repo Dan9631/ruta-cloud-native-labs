@@ -1,0 +1,25 @@
+{
+  "title": "Módulo 07 (2 de 2) · Reto",
+  "description": "Construye sin guía un Pod con native sidecar y una HTTPRoute que manda a v2 por cabecera y reparte el resto 80/20. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "Sidecar y canary con cabecera", "text": "step1/text.md", "verify": "step1/verify.sh" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "*", "target": "/root/solucion" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-2nodes"
+  }
+}

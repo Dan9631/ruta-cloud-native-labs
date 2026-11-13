@@ -1,0 +1,24 @@
+Solucion del reto del modulo 07
+===============================
+
+1. Lee los dos manifiestos:
+
+   cat /root/solucion/reto-sidecar.yaml
+   cat /root/solucion/reto-httproute.yaml
+
+2. Aplicalos y espera al Pod:
+
+   kubectl apply -f /root/solucion/reto-sidecar.yaml -f /root/solucion/reto-httproute.yaml
+   kubectl wait --for=condition=Ready pod/reto-sidecar -n lab-07 --timeout=90s
+
+3. Comprueba el sidecar (espera unos segundos para que haya lineas):
+
+   kubectl logs reto-sidecar -n lab-07 -c shipper --tail=2
+
+4. Comprueba la ruta a traves del Gateway (puerto 30080 de controlplane):
+
+   export GW=http://$(kubectl get node controlplane -o jsonpath='{.status.addresses[?(@.type=="InternalIP")].address}'):30080
+   for i in 1 2 3 4 5; do curl -s -H 'x-version: v2' $GW/lab07/reto | grep '^Name:'; done
+   for i in $(seq 10); do curl -s $GW/lab07/reto | grep '^Name:'; done | sort | uniq -c
+
+   Con la cabecera responde siempre "Name: v2"; sin ella, 8 de cada 10 son v1.

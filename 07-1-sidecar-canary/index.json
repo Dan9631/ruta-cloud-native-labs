@@ -1,0 +1,29 @@
+{
+  "title": "Módulo 07 (1 de 2) · Sidecars y canary con Gateway API",
+  "description": "Un native sidecar que lee los logs de la app y un despliegue canary por pesos con una HTTPRoute de Gateway API sobre Traefik. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "Un Pod con native sidecar", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "El sidecar lee los logs de la app", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "Dos versiones de un microservicio", "text": "step3/text.md", "verify": "step3/verify.sh" },
+      { "title": "Canary 90/10 con HTTPRoute", "text": "step4/text.md", "verify": "step4/verify.sh" },
+      { "title": "Subir el canary al 50 %", "text": "step5/text.md", "verify": "step5/verify.sh" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "*.yaml", "target": "/root/lab" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-2nodes"
+  }
+}
