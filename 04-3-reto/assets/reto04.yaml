@@ -1,0 +1,83 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: entrenamiento
+  namespace: lab-04
+spec:
+  nodeSelector:            # obliga a ir a zona-b (node01)
+    zone: zona-b
+  tolerations:             # permite entrar pese al taint
+    - key: lab-04-reto
+      operator: Equal
+      value: gpu
+      effect: NoSchedule
+  containers:
+    - name: nginx
+      image: nginx:1.27-alpine
+      resources:
+        requests: { cpu: 10m, memory: 16Mi }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  namespace: lab-04
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: api }
+  template:
+    metadata:
+      labels: { app: api }
+    spec:
+      affinity:            # tambien valdria nodeSelector: {disktype: ssd}
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: disktype
+                    operator: In
+                    values: ["ssd"]
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine
+          resources:       # requests == limits en CPU y memoria -> Guaranteed
+            requests: { cpu: 50m, memory: 32Mi }
+            limits:   { cpu: 50m, memory: 32Mi }
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: monitor
+  namespace: lab-04
+spec:
+  selector:
+    matchLabels: { app: monitor }
+  template:
+    metadata:
+      labels: { app: monitor }
+    spec:
+      tolerations:         # el taint del reto en node01
+        - key: lab-04-reto
+          operator: Exists
+          effect: NoSchedule
+        # En un cluster con el taint de control-plane harian falta tambien esto:
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
+          effect: NoSchedule
+      containers:
+        - name: monitor
+          image: busybox:1.37
+          command: ["sleep", "86400"]
+          resources:
+            requests: { cpu: 10m, memory: 16Mi }
+            limits:   { cpu: 50m, memory: 32Mi }
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: cuota
+  namespace: lab-04
+spec:
+  hard:
+    pods: "10"

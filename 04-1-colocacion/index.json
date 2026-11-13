@@ -1,0 +1,29 @@
+{
+  "title": "Módulo 04 (1 de 3) · Dónde cae cada Pod: selectors, afinidad y taints",
+  "description": "Scheduling libre y manual, labels y selectors, nodeSelector, node affinity, pod anti-affinity, taints y tolerations en un clúster de dos nodos. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "Los nodos y el scheduling libre o manual", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "Labels y selectors", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "nodeSelector y un Pod imposible", "text": "step3/text.md", "verify": "step3/verify.sh" },
+      { "title": "Node affinity y pod anti-affinity", "text": "step4/text.md", "verify": "step4/verify.sh" },
+      { "title": "Taints y tolerations", "text": "step5/text.md", "verify": "step5/verify.sh" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "*.yaml", "target": "/root/lab" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-2nodes"
+  }
+}

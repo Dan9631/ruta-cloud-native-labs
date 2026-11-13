@@ -1,0 +1,25 @@
+{
+  "title": "Módulo 04 (3 de 3) · Reto",
+  "description": "Reserva un nodo con taint, toleration y afinidad, fija un Deployment Guaranteed, cubre todos los nodos con un DaemonSet y limita el namespace. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "Coloca las cargas", "text": "step1/text.md", "verify": "step1/verify.sh" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "*", "target": "/root/solucion" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-2nodes"
+  }
+}

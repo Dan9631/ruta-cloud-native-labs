@@ -1,0 +1,30 @@
+{
+  "title": "Módulo 04 (2 de 3) · Recursos, DaemonSets y prioridad",
+  "description": "Requests, limits y QoS, LimitRange y ResourceQuota, DaemonSets, static Pods, schedulerName, PriorityClass y topology spread. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "Requests, limits y QoS classes", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "LimitRange y ResourceQuota", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "DaemonSet y taints", "text": "step3/text.md", "verify": "step3/verify.sh" },
+      { "title": "Static Pods", "text": "step4/text.md", "verify": "step4/verify.sh" },
+      { "title": "schedulerName y PriorityClass", "text": "step5/text.md", "verify": "step5/verify.sh" },
+      { "title": "Repartir réplicas por zonas", "text": "step6/text.md", "verify": "step6/verify.sh" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "*.yaml", "target": "/root/lab" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-2nodes"
+  }
+}

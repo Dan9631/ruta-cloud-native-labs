@@ -1,0 +1,31 @@
+# El mismo agente, pero SIN tolerations: no llega a los nodos con un taint NoSchedule.
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: agente-sin-tol
+  namespace: lab-04
+spec:
+  selector:
+    matchLabels:
+      app: agente-sin-tol
+  template:
+    metadata:
+      labels:
+        app: agente-sin-tol
+    spec:
+      containers:
+        - name: agente
+          image: busybox:1.37
+          command: ["sh", "-c", "while true; do echo agente en $NODO; sleep 30; done"]
+          env:
+            - name: NODO
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi
+            limits:
+              cpu: 50m
+              memory: 32Mi

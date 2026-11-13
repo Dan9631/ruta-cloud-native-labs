@@ -1,0 +1,30 @@
+Solucion del reto del modulo 04
+===============================
+
+1. Pon el taint del reto en node01:
+
+   kubectl taint nodes node01 lab-04-reto=gpu:NoSchedule
+
+2. Lee el manifiesto y aplicalo (Pod, Deployment, DaemonSet y ResourceQuota):
+
+   cat /root/solucion/reto04.yaml
+   kubectl apply -f /root/solucion/reto04.yaml
+   kubectl rollout status deploy/api -n lab-04
+   kubectl rollout status ds/monitor -n lab-04
+
+3. Comprueba:
+
+   kubectl get pods -n lab-04 -o wide
+   kubectl get ds monitor -n lab-04
+   kubectl get pods -n lab-04 -l app=api -o custom-columns='POD:.metadata.name,QOS:.status.qosClass,NODO:.spec.nodeName'
+   kubectl describe resourcequota cuota -n lab-04
+
+La trampa del DaemonSet: sin la toleration de lab-04-reto se queda con 1 Pod
+(node01 tiene el taint del reto). Una alternativa valida es una unica toleration
+"- operator: Exists" sin key, que tolera cualquier taint (asi lo hacen muchos
+agentes de red y de logs).
+
+Diferencia con el lab local: alli el plano de control conserva su taint y el
+DaemonSet necesita las dos tolerations para llegar a los 3 nodos. Aqui
+controlplane ya no tiene ese taint; la segunda toleration del manifiesto no
+hace falta, pero tampoco molesta.
