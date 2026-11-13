@@ -1,0 +1,27 @@
+{
+  "title": "Módulo 01 (4 de 4) · Reto",
+  "description": "Construye sin guía la versión 2.0 de tu imagen, llévala al nodo y ejecútala como Pod. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "Publica la versión 2.0", "text": "step1/text.md", "verify": "step1/verify.sh" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "Containerfile", "target": "/root/lab" },
+        { "file": "index.html", "target": "/root/lab/web" },
+        { "file": "pasos.txt", "target": "/root/solucion" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-1node"
+  }
+}

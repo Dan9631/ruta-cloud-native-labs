@@ -1,0 +1,29 @@
+{
+  "title": "Módulo 01 (2 de 4) · Construir imágenes y usar un registry",
+  "description": "Construye tu propia imagen con un Containerfile, mira sus capas y metadatos, súbela a un registry y prueba un build multi-stage. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "Construir tu imagen y ver sus capas", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "Ejecutar tu imagen", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "Etiquetar y subir a un registry", "text": "step3/text.md", "verify": "step3/verify.sh" },
+      { "title": "Build multi-stage", "text": "step4/text.md", "verify": "step4/verify.sh" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "Containerfile*", "target": "/root/lab" },
+        { "file": "index.html", "target": "/root/lab/web" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "ubuntu"
+  }
+}

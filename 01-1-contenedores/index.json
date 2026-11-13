@@ -1,0 +1,23 @@
+{
+  "title": "Módulo 01 (1 de 4) · Contenedores con Podman",
+  "description": "Ejecuta un contenedor con Podman, mira sus logs y procesos, y comprueba qué aíslan los namespaces y qué limitan los cgroups. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "Tu primer contenedor: logs y procesos", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "Namespaces: la vista propia del contenedor", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "cgroups: limitar recursos", "text": "step3/text.md", "verify": "step3/verify.sh" },
+      { "title": "Parar y borrar", "text": "step4/text.md", "verify": "step4/verify.sh" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    }
+  },
+  "backend": {
+    "imageid": "ubuntu"
+  }
+}

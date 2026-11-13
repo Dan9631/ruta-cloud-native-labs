@@ -1,0 +1,29 @@
+{
+  "title": "Módulo 01 (3 de 4) · Tu imagen en Kubernetes",
+  "description": "Construye tu imagen con Podman, impórtala en el containerd del nodo, ejecútala como Pod y provoca un ImagePullBackOff. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "Llevar la imagen al nodo", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "Ejecutarla como Pod y verla en el runtime", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "El error típico: imagen que el nodo no tiene", "text": "step3/text.md", "verify": "step3/verify.sh" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "Containerfile", "target": "/root/lab" },
+        { "file": "pod-web-propia.yaml", "target": "/root/lab" },
+        { "file": "index.html", "target": "/root/lab/web" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-1node"
+  }
+}

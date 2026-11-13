@@ -1,0 +1,38 @@
+Solucion del reto del modulo 01
+===============================
+
+1. Copia los archivos y cambia la pagina y la etiqueta de version:
+
+   cp -r /root/lab /root/kcna-web-v2
+   cd /root/kcna-web-v2
+   sed -i 's/v1/v2/' web/index.html
+   sed -i 's/version="1.0"/version="2.0"/' Containerfile
+   grep v2 web/index.html
+   grep version= Containerfile
+
+2. Construye la imagen 2.0 y comprueba la etiqueta:
+
+   podman build -t kcna-web:2.0 .
+   podman image inspect localhost/kcna-web:2.0 | grep image.version
+
+   Alternativa sin editar el Containerfile:
+   podman build --label org.opencontainers.image.version=2.0 -t kcna-web:2.0 .
+
+3. Llevala al containerd del nodo:
+
+   podman save -o /root/kcna-web-2.0.tar localhost/kcna-web:2.0
+   ctr -n k8s.io images import /root/kcna-web-2.0.tar
+   crictl images | grep kcna
+
+4. Crea el Pod y espera a que este listo:
+
+   kubectl run web-v2 -n lab-01 --image=localhost/kcna-web:2.0 --labels='app=kcna-web,version=v2'
+   kubectl wait --for=condition=Ready pod/web-v2 -n lab-01 --timeout=60s
+
+   Si lo creaste antes de importar la imagen y esta en ImagePullBackOff:
+   kubectl delete pod web-v2 -n lab-01   (y vuelve a crearlo)
+
+5. Comprueba:
+
+   kubectl get pod web-v2 -n lab-01 --show-labels
+   kubectl exec web-v2 -n lab-01 -- wget -qO- http://localhost/
