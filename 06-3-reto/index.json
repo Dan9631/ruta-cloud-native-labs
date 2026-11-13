@@ -1,0 +1,25 @@
+{
+  "title": "Módulo 06 (3 de 3) · Reto",
+  "description": "Publica sin guía una aplicación con un Service ClusterIP, uno headless, un Ingress y una HTTPRoute de Gateway API. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "Publica la tienda", "text": "step1/text.md", "verify": "step1/verify.sh" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "*", "target": "/root/solucion" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-2nodes"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "title": "Módulo 06 (1 de 3) · Services y DNS",
+  "description": "Red de nodos y de Pods, Services ClusterIP, headless, ExternalName y NodePort, DNS con CoreDNS y EndpointSlices. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "La red de nodos y de Pods", "text": "step1/text.md" },
+      { "title": "whoami y su Service ClusterIP", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "DNS y balanceo desde dentro", "text": "step3/text.md" },
+      { "title": "EndpointSlices y escalado", "text": "step4/text.md", "verify": "step4/verify.sh" },
+      { "title": "Services headless y ExternalName", "text": "step5/text.md", "verify": "step5/verify.sh" },
+      { "title": "NodePort: entrar desde fuera", "text": "step6/text.md", "verify": "step6/verify.sh" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "*.yaml", "target": "/root/lab" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-2nodes"
+  }
+}

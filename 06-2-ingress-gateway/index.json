@@ -1,0 +1,27 @@
+{
+  "title": "Módulo 06 (2 de 3) · Ingress y Gateway API con Traefik",
+  "description": "Publica una aplicación por HTTP con un Ingress y con una HTTPRoute de Gateway API a través de Traefik, y abre un túnel con port-forward. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "El Ingress Controller y un Ingress por path", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "HTTPRoute con Gateway API", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "port-forward", "text": "step3/text.md", "verify": "step3/verify.sh" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "*.yaml", "target": "/root/lab" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-2nodes"
+  }
+}

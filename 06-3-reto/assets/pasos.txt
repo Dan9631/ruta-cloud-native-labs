@@ -1,0 +1,27 @@
+Solucion del reto del modulo 06
+===============================
+
+1. Crea el Deployment y espera a que este listo:
+
+   kubectl create deployment tienda --image=traefik/whoami:v1.11 --replicas=2 -n lab-06
+   kubectl rollout status deploy/tienda -n lab-06
+
+2. Crea los dos Services (expose copia el selector app=tienda del Deployment):
+
+   kubectl expose deployment tienda --name=tienda --port=8080 --target-port=80 -n lab-06
+   kubectl expose deployment tienda --name=tienda-headless --cluster-ip=None --port=80 -n lab-06
+
+3. Crea el Ingress (el * final indica pathType: Prefix):
+
+   kubectl create ingress tienda -n lab-06 --rule="/lab06/tienda*=tienda:8080"
+
+4. Crea la HTTPRoute (lee antes el manifiesto):
+
+   cat /root/solucion/reto-httproute.yaml
+   kubectl apply -f /root/solucion/reto-httproute.yaml
+
+5. Comprueba:
+
+   CP=$(kubectl get node controlplane -o jsonpath='{.status.addresses[?(@.type=="InternalIP")].address}')
+   curl -s http://$CP:30800/lab06/tienda | grep Hostname
+   curl -s http://$CP:30800/lab06/gw-tienda | grep Hostname
