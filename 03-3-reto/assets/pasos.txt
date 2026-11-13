@@ -1,0 +1,24 @@
+Solucion del reto del modulo 03
+===============================
+
+1. Crea la configuracion:
+
+   kubectl create configmap web-config -n lab-03 --from-literal=index.html='<h1>Reto modulo 03</h1>'
+   kubectl create secret generic web-secret -n lab-03 --from-literal=api-token=token-de-prueba-123
+
+2. Crea el Deployment con la version 1.27 (lee antes el manifiesto):
+
+   cat /root/solucion/web.yaml
+   kubectl apply -f /root/solucion/web.yaml
+   kubectl rollout status deploy/web -n lab-03
+
+3. Actualiza a la version 1.28 (esto crea la segunda revision):
+
+   kubectl set image deploy/web nginx=nginx:1.28-alpine -n lab-03
+   kubectl rollout status deploy/web -n lab-03
+
+4. Comprueba:
+
+   kubectl rollout history deploy/web -n lab-03
+   kubectl exec deploy/web -n lab-03 -- wget -qO- http://localhost/
+   kubectl exec deploy/web -n lab-03 -- sh -c 'echo $API_TOKEN'

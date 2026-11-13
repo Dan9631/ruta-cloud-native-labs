@@ -1,0 +1,41 @@
+# Solucion del reto del modulo 03. Se aplica despues de crear el ConfigMap y el Secret (ver pasos.txt).
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  namespace: lab-03
+  labels:
+    app: web
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1          # como mucho 1 Pod de mas durante la actualizacion
+      maxUnavailable: 0    # nunca menos de 3 Pods disponibles
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine
+          ports:
+            - containerPort: 80
+          env:
+            - name: API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: web-secret
+                  key: api-token
+          volumeMounts:
+            - name: pagina
+              mountPath: /usr/share/nginx/html
+      volumes:
+        - name: pagina
+          configMap:
+            name: web-config

@@ -1,0 +1,29 @@
+{
+  "title": "Módulo 03 (1 de 3) · Pods, labels y ReplicaSets",
+  "description": "Crea Pods, fíltralos por labels, observa sus fases y mira cómo un ReplicaSet los repone. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "Un Pod imperativo y su YAML", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "Labels, selectors y annotations", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "Pod multi-contenedor con init container", "text": "step3/text.md", "verify": "step3/verify.sh" },
+      { "title": "Fases y restartPolicy", "text": "step4/text.md", "verify": "step4/verify.sh" },
+      { "title": "ReplicaSet: autorreparación y labels", "text": "step5/text.md", "verify": "step5/verify.sh" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "*.yaml", "target": "/root/lab" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-2nodes"
+  }
+}

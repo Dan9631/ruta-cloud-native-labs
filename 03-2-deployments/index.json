@@ -1,0 +1,31 @@
+{
+  "title": "Módulo 03 (2 de 3) · Deployments, configuración y Jobs",
+  "description": "Rolling update y rollback de un Deployment, apply declarativo, ConfigMaps, Secrets, Jobs y CronJobs. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "Deployment: creación", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "Rolling update", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "Una actualización rota y el rollback", "text": "step3/text.md", "verify": "step3/verify.sh" },
+      { "title": "Declarativo con apply", "text": "step4/text.md", "verify": "step4/verify.sh" },
+      { "title": "ConfigMaps y Secrets", "text": "step5/text.md", "verify": "step5/verify.sh" },
+      { "title": "Jobs y CronJobs", "text": "step6/text.md", "verify": "step6/verify.sh" },
+      { "title": "Namespaces y el resto de controladores", "text": "step7/text.md" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "*.yaml", "target": "/root/lab" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-2nodes"
+  }
+}
