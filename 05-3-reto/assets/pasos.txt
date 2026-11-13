@@ -1,0 +1,33 @@
+Solucion del reto del modulo 05
+===============================
+
+1. RBAC de la ServiceAccount (Role en el grupo apps, solo en lab-05):
+
+   kubectl create serviceaccount despliegues -n lab-05
+   kubectl create role gestor-deploy --verb=get,list,watch,create,update,patch,delete --resource=deployments.apps -n lab-05
+   kubectl create rolebinding gestor-deploy --role=gestor-deploy --serviceaccount=lab-05:despliegues -n lab-05
+
+2. Permiso para listar nodos (cluster-scoped):
+
+   kubectl create clusterrole lab-05-ver-nodos --verb=get,list,watch --resource=nodes
+   kubectl create clusterrolebinding lab-05-despliegues-nodos --clusterrole=lab-05-ver-nodos --serviceaccount=lab-05:despliegues
+
+3. El perfil restricted ya viene puesto. Si lo hubieras quitado:
+
+   kubectl label --overwrite ns lab-05 pod-security.kubernetes.io/enforce=restricted
+
+4. Pod endurecido y NetworkPolicy (lee antes el manifiesto):
+
+   cat /root/solucion/reto05.yaml
+   kubectl apply -f /root/solucion/reto05.yaml
+   kubectl wait --for=condition=Ready pod/app-segura -n lab-05 --timeout=90s
+
+5. Comprueba:
+
+   kubectl auth can-i create deployments -n lab-05 --as=system:serviceaccount:lab-05:despliegues   # yes
+   kubectl auth can-i get secrets -n lab-05 --as=system:serviceaccount:lab-05:despliegues          # no
+   kubectl auth can-i list nodes --as=system:serviceaccount:lab-05:despliegues                     # yes
+   kubectl auth can-i delete nodes --as=system:serviceaccount:lab-05:despliegues                   # no
+   kubectl exec -n lab-05 app-segura -- id                                                          # uid=2000
+
+Ojo: si pones apiGroups: [""] con deployments, can-i respondera "no". Los Deployments estan en el grupo apps.

@@ -1,0 +1,28 @@
+{
+  "title": "Módulo 05 (2 de 3) · securityContext, Pod Security y NetworkPolicies",
+  "description": "Endurece Pods con securityContext, aplica el perfil restricted de Pod Security Admission, filtra tráfico con NetworkPolicies y comprueba que base64 no es cifrado. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "securityContext: root frente a endurecido", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "Pod Security Admission: perfil restricted", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "NetworkPolicies: default deny y permitir por labels", "text": "step3/text.md", "verify": "step3/verify.sh" },
+      { "title": "Secrets: base64 no es cifrado", "text": "step4/text.md", "verify": "step4/verify.sh" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "*.yaml", "target": "/root/lab" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-2nodes"
+  }
+}

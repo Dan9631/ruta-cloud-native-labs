@@ -1,0 +1,44 @@
+# Solucion del reto del modulo 05: Pod endurecido y NetworkPolicy (ver pasos.txt).
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-segura
+  namespace: lab-05
+spec:
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 2000
+    seccompProfile:
+      type: RuntimeDefault
+  containers:
+    - name: app
+      image: busybox:1.37
+      command: ["sleep", "3600"]
+      securityContext:
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        capabilities:
+          drop: ["ALL"]
+      resources:
+        requests: { cpu: 10m, memory: 16Mi }
+        limits:   { cpu: 50m, memory: 32Mi }
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: db-solo-api
+  namespace: lab-05
+spec:
+  podSelector:
+    matchLabels:
+      app: db                # A QUIEN protege la politica
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: api       # QUIEN puede entrar
+      ports:
+        - protocol: TCP
+          port: 6379

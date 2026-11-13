@@ -1,0 +1,25 @@
+{
+  "title": "Módulo 05 (3 de 3) · Reto",
+  "description": "Construye sin guía una ServiceAccount con permisos mínimos, un Pod que cumple el perfil restricted y una NetworkPolicy. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "Permisos mínimos, Pod seguro y NetworkPolicy", "text": "step1/text.md", "verify": "step1/verify.sh" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "*", "target": "/root/solucion" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-2nodes"
+  }
+}
