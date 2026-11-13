@@ -1,0 +1,27 @@
+{
+  "title": "Módulo 12 (1 de 4) · Kustomize: una base, dos entornos",
+  "description": "Renderiza y aplica dos overlays de Kustomize sobre la misma base y detecta el drift a mano con kubectl diff. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "Ver qué genera un overlay sin aplicarlo", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "Aplicar dev y prod sin que se mezclen", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "Detectar el drift con kubectl diff", "text": "step3/text.md", "verify": "step3/verify.sh" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "*", "target": "/opt/lab12" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-2nodes"
+  }
+}

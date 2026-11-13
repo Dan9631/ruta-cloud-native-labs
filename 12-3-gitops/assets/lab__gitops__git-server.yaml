@@ -1,0 +1,99 @@
+# Servidor Git minimo DENTRO del cluster. Usa "git daemon" (protocolo git://,
+# puerto 9418) con escritura habilitada para poder hacer push.
+#
+# Imagen: se reutiliza la de Argo CD porque ya trae git completo (incluido
+# git-daemon) y ya esta descargada tras instalar Argo CD.
+# Version Killercoda: el repo vive en un emptyDir (en el curso, en un PVC),
+# porque no se puede contar con un StorageClass por defecto. Si el Pod se
+# borra, el repo vuelve al commit inicial.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: git-server
+  labels:
+    app: git-server
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate          # un solo pod a la vez escribe en el repo
+  selector:
+    matchLabels:
+      app: git-server
+  template:
+    metadata:
+      labels:
+        app: git-server
+    spec:
+      securityContext:
+        runAsUser: 999
+        runAsGroup: 999
+        fsGroup: 999
+      initContainers:
+        # Crea el repo "app.git" con un primer commit a partir del ConfigMap git-seed.
+        - name: init-repo
+          image: quay.io/argoproj/argocd:v3.5.5
+          command: ["sh", "-c"]
+          args:
+            - |
+              set -e
+              if [ -d /srv/git/app.git ]; then echo "El repo ya existe"; exit 0; fi
+              export HOME=/tmp
+              git config --global user.name "Seed"
+              git config --global user.email "seed@kcna.local"
+              git init --bare -b main /srv/git/app.git
+              git clone /srv/git/app.git /tmp/work
+              cp /seed/* /tmp/work/
+              cd /tmp/work
+              git add .
+              git commit -m "Commit inicial: gitops-web con 2 replicas"
+              git push origin main
+              echo "Repo creado"
+          volumeMounts:
+            - name: data
+              mountPath: /srv/git
+            - name: seed
+              mountPath: /seed
+          resources:
+            requests: { cpu: 10m, memory: 16Mi }
+            limits: { cpu: 200m, memory: 128Mi }
+      containers:
+        - name: git-daemon
+          image: quay.io/argoproj/argocd:v3.5.5
+          command: ["git"]
+          args:
+            - daemon
+            - --verbose
+            - --reuseaddr
+            - --export-all
+            - --enable=receive-pack
+            - --base-path=/srv/git
+            - /srv/git
+          ports:
+            - name: git
+              containerPort: 9418
+          volumeMounts:
+            - name: data
+              mountPath: /srv/git
+          resources:
+            requests: { cpu: 10m, memory: 16Mi }
+            limits: { cpu: 200m, memory: 128Mi }
+      volumes:
+        - name: data
+          emptyDir: {}
+        - name: seed
+          configMap:
+            name: git-seed
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: git-server
+  labels:
+    app: git-server
+spec:
+  selector:
+    app: git-server
+  ports:
+    - name: git
+      port: 9418
+      targetPort: 9418

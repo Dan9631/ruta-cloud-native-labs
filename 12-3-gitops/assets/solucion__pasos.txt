@@ -1,0 +1,27 @@
+Solucion del reto GitOps del modulo 12
+======================================
+
+Todo se hace en el clon /root/app, con el port-forward a svc/git-server abierto.
+
+1. Sube las replicas en Git:
+
+   cd /root/app
+   sed -i 's/replicas: 2/replicas: 3/' deployment.yaml
+
+2. Anade el ConfigMap al repo (hay una copia lista en /root/solucion/configmap.yaml):
+
+   cp /root/solucion/configmap.yaml /root/app/configmap.yaml
+   cat configmap.yaml
+
+3. Commit y push (git add para que entre el archivo nuevo):
+
+   git add .
+   git commit -m "Reto: 3 replicas y ConfigMap gitops-config"
+   git push
+
+4. Fuerza el refresh y comprueba:
+
+   kubectl annotate application gitops-demo -n argocd argocd.argoproj.io/refresh=normal --overwrite
+   kubectl get application gitops-demo -n argocd
+   kubectl get deploy gitops-web -n lab-12
+   kubectl get cm gitops-config -n lab-12 -o yaml

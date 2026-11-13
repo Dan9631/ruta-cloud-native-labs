@@ -1,0 +1,32 @@
+Solucion del reto del modulo 12
+===============================
+
+A. Kustomize: overlay qa
+------------------------
+
+1. Crea la carpeta del overlay y copia la kustomization de la solucion (leela antes):
+
+   cat /root/solucion/qa-kustomization.yaml
+   mkdir -p /root/lab/kustomize/overlays/qa
+   cp /root/solucion/qa-kustomization.yaml /root/lab/kustomize/overlays/qa/kustomization.yaml
+
+2. Renderiza, aplica y comprueba:
+
+   kubectl kustomize /root/lab/kustomize/overlays/qa
+   kubectl apply -k /root/lab/kustomize/overlays/qa
+   kubectl rollout status deploy/qa-web -n lab-12
+   kubectl get svc qa-web -n lab-12 -o jsonpath='{.spec.selector}'; echo
+
+   Fijate en que "replicas" e "images" se refieren al nombre de la base (web, nginx),
+   no al nombre final con prefijo (qa-web).
+
+B. Helm: release tienda
+-----------------------
+
+   helm install tienda /root/lab/helm/saludo -n lab-12 --set mensaje="Tienda v1"
+   helm upgrade tienda /root/lab/helm/saludo -n lab-12 --reuse-values --set replicaCount=3
+   helm rollback tienda 1 -n lab-12
+   helm history tienda -n lab-12
+
+   Sin --reuse-values el upgrade volveria al mensaje por defecto de values.yaml.
+   Tras el rollback, la revision 3 dice "Rollback to 1" y el Deployment vuelve a 1 replica.

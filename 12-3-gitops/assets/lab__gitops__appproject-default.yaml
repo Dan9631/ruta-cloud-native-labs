@@ -1,0 +1,18 @@
+# Proyecto "default" de Argo CD. Con la instalacion completa aparece solo; el
+# manifiesto "core" no lo incluye, asi que lo declaramos aqui para no depender
+# de ello. Es igual de permisivo que el original: cualquier repo, cualquier
+# cluster y namespace, cualquier tipo de recurso.
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: default
+  namespace: argocd
+spec:
+  sourceRepos:
+    - '*'
+  destinations:
+    - namespace: '*'
+      server: '*'
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'

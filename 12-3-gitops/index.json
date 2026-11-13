@@ -1,0 +1,31 @@
+{
+  "title": "Módulo 12 (3 de 4) · GitOps con Argo CD",
+  "description": "Instala Argo CD en modo core, sirve un repo Git dentro del clúster y mira cómo Argo CD sincroniza, deshace los cambios a mano y aplica tus commits. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "Instalar Argo CD (core)", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "El servidor Git con el repo inicial", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "Crear la Application", "text": "step3/text.md", "verify": "step3/verify.sh" },
+      { "title": "Drift: Argo CD deshace los cambios a mano", "text": "step4/text.md", "verify": "step4/verify.sh" },
+      { "title": "El cambio correcto: un commit", "text": "step5/text.md", "verify": "step5/verify.sh" },
+      { "title": "Reto: solo con commits", "text": "step6/text.md", "verify": "step6/verify.sh" },
+      { "title": "(Opcional) Prune y la interfaz web", "text": "step7/text.md" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "*", "target": "/opt/lab12" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-2nodes"
+  }
+}

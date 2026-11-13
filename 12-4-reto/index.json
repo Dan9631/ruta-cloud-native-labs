@@ -1,0 +1,26 @@
+{
+  "title": "Módulo 12 (4 de 4) · Reto",
+  "description": "Crea sin guía un overlay de Kustomize para un entorno nuevo y lleva un release de Helm por install, upgrade y rollback. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "Kustomize: el entorno qa", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "Helm: el release tienda", "text": "step2/text.md", "verify": "step2/verify.sh" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "*", "target": "/opt/lab12" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-2nodes"
+  }
+}

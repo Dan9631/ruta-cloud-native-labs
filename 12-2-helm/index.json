@@ -1,0 +1,28 @@
+{
+  "title": "Módulo 12 (2 de 4) · Helm: chart propio, upgrade y rollback",
+  "description": "Renderiza e instala un chart de Helm escrito a mano, actualízalo con otros values, mira dónde guarda Helm las revisiones y haz un rollback. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "Explorar y renderizar el chart", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "Instalar el release", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "Upgrade cambiando values", "text": "step3/text.md", "verify": "step3/verify.sh" },
+      { "title": "Historial y rollback", "text": "step4/text.md", "verify": "step4/verify.sh" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "*", "target": "/opt/lab12" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-2nodes"
+  }
+}

@@ -1,0 +1,17 @@
+# Overlay qa: copialo a /root/lab/kustomize/overlays/qa/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: lab-12
+namePrefix: qa-
+resources:
+  - ../../base
+labels:
+  - pairs:
+      env: qa
+    includeSelectors: true
+replicas:
+  - name: web
+    count: 2
+images:
+  - name: nginx
+    newTag: 1.28-alpine
