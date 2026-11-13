@@ -1,0 +1,22 @@
+Solucion del reto del modulo 08
+===============================
+
+1. Lee el manifiesto: una StorageClass, un PVC y un Pod.
+
+   cat /root/solucion/reto-storage.yaml
+
+2. Aplicalo y espera a que el Pod este listo:
+
+   kubectl apply -f /root/solucion/reto-storage.yaml
+   kubectl wait --for=condition=Ready pod/reto-app -n lab-08 --timeout=120s
+
+3. Comprueba:
+
+   kubectl get sc lab-08-retener
+   kubectl get pvc reto-datos -n lab-08
+   kubectl get pv
+   kubectl exec reto-app -n lab-08 -- cat /datos/hola.txt
+
+La reclaim policy del PV dinamico la hereda de la StorageClass (Retain).
+Si borras el Pod y el PVC, el PV queda Released y la carpeta con hola.txt
+sigue en node01.

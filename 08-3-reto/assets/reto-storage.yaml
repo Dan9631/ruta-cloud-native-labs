@@ -1,0 +1,41 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: lab-08-retener
+provisioner: rancher.io/local-path
+reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: reto-datos
+  namespace: lab-08
+spec:
+  storageClassName: lab-08-retener
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 64Mi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: reto-app
+  namespace: lab-08
+spec:
+  terminationGracePeriodSeconds: 2
+  volumes:
+    - name: datos
+      persistentVolumeClaim:
+        claimName: reto-datos
+  containers:
+    - name: app
+      image: busybox:1.37
+      command: ["sh", "-c", "echo kcna > /datos/hola.txt; sleep 36000"]
+      volumeMounts:
+        - name: datos
+          mountPath: /datos
+      resources:
+        requests: { cpu: 10m, memory: 16Mi }
+        limits:   { cpu: 50m, memory: 32Mi }

@@ -1,0 +1,29 @@
+{
+  "title": "Módulo 08 (2 de 3) · PV estático, StatefulSets y volúmenes projected",
+  "description": "Crea un PV a mano con Retain y reutilízalo, da un PVC propio a cada réplica de un StatefulSet y junta configuración en un volumen projected. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "PV estático con hostPath", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "Retain: Released y reutilización", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "StatefulSet con volumeClaimTemplates", "text": "step3/text.md", "verify": "step3/verify.sh" },
+      { "title": "Identidad y almacenamiento estables", "text": "step4/text.md", "verify": "step4/verify.sh" },
+      { "title": "Volumen projected", "text": "step5/text.md", "verify": "step5/verify.sh" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "*.yaml", "target": "/root/lab" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-2nodes"
+  }
+}
