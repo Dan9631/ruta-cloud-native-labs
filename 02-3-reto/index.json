@@ -1,0 +1,25 @@
+{
+  "title": "Módulo 02 (3 de 3) · Reto",
+  "description": "Documenta sin guía la arquitectura real del clúster en un ConfigMap y prepara un contexto de trabajo en el kubeconfig. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "Documenta la arquitectura", "text": "step1/text.md", "verify": "step1/verify.sh" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "*", "target": "/root/solucion" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-2nodes"
+  }
+}

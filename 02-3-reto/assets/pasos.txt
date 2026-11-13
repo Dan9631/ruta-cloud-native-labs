@@ -1,0 +1,34 @@
+Solucion del reto del modulo 02
+===============================
+
+1. Descubre cada valor con un comando:
+
+   ETCD_NODE=$(kubectl get pods -n kube-system -l component=etcd -o jsonpath='{.items[0].spec.nodeName}')
+   API_IMG=$(kubectl get pods -n kube-system -l component=kube-apiserver -o jsonpath='{.items[0].spec.containers[0].image}')
+   grep staticPodPath /var/lib/kubelet/config.yaml
+   STATIC=$(ls /etc/kubernetes/manifests | wc -l)
+   DNS=$(kubectl get deploy coredns -n kube-system -o jsonpath='{.spec.replicas}')
+   kubectl api-resources --api-group=apps | grep deployments     # -> apps/v1
+   echo "$ETCD_NODE $API_IMG $STATIC $DNS"
+
+2. Crea el ConfigMap:
+
+   kubectl create configmap arquitectura -n lab-02 \
+     --from-literal=etcd-node="$ETCD_NODE" \
+     --from-literal=apiserver-image="$API_IMG" \
+     --from-literal=static-pods="$STATIC" \
+     --from-literal=coredns-replicas="$DNS" \
+     --from-literal=deployment-api=apps/v1
+
+   kubectl get configmap arquitectura -n lab-02 -o yaml
+
+3. Crea el contexto con el cluster y el usuario del contexto actual, sin activarlo:
+
+   CLUSTER=$(kubectl config view --minify -o jsonpath='{.contexts[0].context.cluster}')
+   USUARIO=$(kubectl config view --minify -o jsonpath='{.contexts[0].context.user}')
+   kubectl config set-context lab02 --cluster="$CLUSTER" --user="$USUARIO" --namespace=lab-02
+   kubectl config get-contexts
+
+   El asterisco de get-contexts debe seguir en el contexto de antes.
+   Para usar el nuevo harias: kubectl config use-context lab02
+   (y volverias con use-context y el nombre del contexto anterior).

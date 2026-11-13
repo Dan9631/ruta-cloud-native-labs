@@ -1,0 +1,24 @@
+{
+  "title": "Módulo 02 (2 de 3) · Controladores, API y kubeconfig",
+  "description": "Sigue la cadena de controladores en los eventos, observa la reconciliación, explora la API REST y trabaja con una copia del kubeconfig. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "La cadena de controladores en acción", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "Reconciliación: borra un Pod", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "kubectl es un cliente REST", "text": "step3/text.md" },
+      { "title": "Explorar la API", "text": "step4/text.md" },
+      { "title": "El kubeconfig (sin tocar el tuyo)", "text": "step5/text.md", "verify": "step5/verify.sh" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-2nodes"
+  }
+}
