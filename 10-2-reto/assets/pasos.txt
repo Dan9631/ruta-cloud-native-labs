@@ -1,0 +1,22 @@
+Solucion del reto del modulo 10
+===============================
+
+1. Lee el manifiesto: un Deployment 'web' con requests.cpu 50m y un HPA 'web'
+   (autoscaling/v2) entre 2 y 6 replicas, objetivo 60% de CPU y ventana de
+   bajada de 60 s en behavior.scaleDown:
+
+   cat /root/solucion/web-hpa.yaml
+
+2. Aplicalo y espera a que el Deployment este listo:
+
+   kubectl apply -f /root/solucion/web-hpa.yaml
+   kubectl rollout status deploy/web -n lab-10
+
+3. Repite hasta que TARGETS muestre un porcentaje (por ejemplo cpu: 0%/60%),
+   no <unknown>. Puede tardar uno o dos minutos:
+
+   kubectl get hpa web -n lab-10
+
+4. Comprueba el detalle:
+
+   kubectl describe hpa web -n lab-10

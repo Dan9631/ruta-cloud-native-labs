@@ -1,0 +1,29 @@
+{
+  "title": "Módulo 10 (1 de 2) · Autoscaling con HPA",
+  "description": "Despliega una app que consume CPU, genera carga y observa cómo un HorizontalPodAutoscaler sube y baja las réplicas. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "La app y su HPA", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "Generar carga", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "Entender la decisión del HPA", "text": "step3/text.md" },
+      { "title": "Quitar la carga y ver cómo baja", "text": "step4/text.md", "verify": "step4/verify.sh" },
+      { "title": "Explorar la API", "text": "step5/text.md" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "*.yaml", "target": "/root/lab" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-2nodes"
+  }
+}

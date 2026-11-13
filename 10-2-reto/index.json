@@ -1,0 +1,25 @@
+{
+  "title": "Módulo 10 (2 de 2) · Reto",
+  "description": "Crea sin guía un Deployment y un HPA autoscaling/v2 con su propia ventana de estabilización, y comprueba que lee métricas. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "Deployment y HPA", "text": "step1/text.md", "verify": "step1/verify.sh" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "*", "target": "/root/solucion" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-2nodes"
+  }
+}
