@@ -1,0 +1,29 @@
+{
+  "title": "Módulo 11 (2 de 3) · Consultas PromQL",
+  "description": "Consulta un Prometheus real con PromQL: targets, counters con rate(), gauges, kube-state-metrics, node-exporter y right-sizing. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "Abrir Prometheus: interfaz web y API", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "Targets, up y selectores", "text": "step2/text.md" },
+      { "title": "Counters con rate() y gauges", "text": "step3/text.md" },
+      { "title": "kube-state-metrics y node-exporter", "text": "step4/text.md", "verify": "step4/verify.sh" },
+      { "title": "FinOps: lo que pides frente a lo que usas", "text": "step5/text.md" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "*.yaml", "target": "/root/lab" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-2nodes"
+  }
+}

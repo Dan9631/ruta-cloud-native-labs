@@ -1,0 +1,18 @@
+# "pendiente": un Pod que pide mas memoria de la que tiene cualquier nodo.
+# El scheduler no encuentra sitio y se queda en Pending: justo lo que vigila una alerta clasica.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pendiente
+  namespace: lab-11
+  labels:
+    app: pendiente
+spec:
+  containers:
+    - name: app
+      image: busybox:1.37
+      command: ["sleep", "3600"]
+      resources:
+        requests:
+          cpu: 10m
+          memory: 64Gi

@@ -1,0 +1,36 @@
+# "registro": un Pod que escribe logs como lo haria una app cloud native.
+#   INFO  -> stdout (salida estandar)
+#   ERROR -> stderr (salida de errores), uno de cada cinco pedidos
+# Va fijado a node01 para que puedas ver sus archivos de log en ese nodo.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: registro
+  namespace: lab-11
+  labels:
+    app: registro
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: node01
+  containers:
+    - name: app
+      image: busybox:1.37
+      command:
+        - sh
+        - -c
+        - |
+          i=0
+          while true; do
+            i=$((i + 1))
+            echo "$(date +%T) INFO pedido $i procesado"
+            if [ $((i % 5)) -eq 0 ]; then
+              echo "$(date +%T) ERROR pago rechazado id=$i" >&2
+            fi
+            sleep 2
+          done
+      resources:
+        requests:
+          cpu: 5m
+          memory: 8Mi
+        limits:
+          memory: 16Mi

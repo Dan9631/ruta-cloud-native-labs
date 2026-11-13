@@ -1,0 +1,29 @@
+{
+  "title": "Módulo 11 (1 de 3) · Logs, kubectl top e instalar Prometheus",
+  "description": "Lee logs y eventos, mira el consumo con kubectl top e instala Prometheus con Helm para ver cómo descubre sus targets. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "Logs, eventos y kubectl top", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "El chart de Prometheus: repositorio, valores e imágenes", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "Instalar Prometheus con Helm", "text": "step3/text.md", "verify": "step3/verify.sh" },
+      { "title": "La interfaz web y los targets", "text": "step4/text.md", "verify": "step4/verify.sh" },
+      { "title": "La configuración y las métricas en crudo", "text": "step5/text.md" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "*.yaml", "target": "/root/lab" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-2nodes"
+  }
+}

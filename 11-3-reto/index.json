@@ -1,0 +1,27 @@
+{
+  "title": "Módulo 11 (3 de 3) · Reto",
+  "description": "Haz que Prometheus descubra y scrapee una app que ya expone métricas, y consulta sus counters y gauges con PromQL. Ruta Cloud Native.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh",
+      "foreground": "espera.sh"
+    },
+    "steps": [
+      { "title": "Que Prometheus vea la tienda", "text": "step1/text.md", "verify": "step1/verify.sh" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "02-tienda.yaml", "target": "/root/lab" },
+        { "file": "tienda-solucion.yaml", "target": "/root/solucion" },
+        { "file": "pasos.txt", "target": "/root/solucion" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-2nodes"
+  }
+}

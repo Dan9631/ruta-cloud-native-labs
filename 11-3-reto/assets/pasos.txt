@@ -1,0 +1,33 @@
+Solucion del reto del modulo 11
+===============================
+
+1. Despliega la tienda tal cual y comprueba que sirve metricas:
+
+   kubectl apply -f /root/lab/02-tienda.yaml
+   kubectl rollout status deploy/tienda -n lab-11
+   kubectl exec -n lab-11 deploy/tienda -- wget -qO- localhost:8080/metrics.txt
+
+2. Comprueba que Prometheus todavia no la scrapea (resultado vacio):
+
+   promql 'up{app="tienda"}'
+
+3. Aplica la version con 2 replicas y las anotaciones en los PODS
+   (spec.template.metadata.annotations, no metadata.annotations del Deployment):
+
+   cat /root/solucion/tienda-solucion.yaml
+   kubectl apply -f /root/solucion/tienda-solucion.yaml
+   kubectl rollout status deploy/tienda -n lab-11
+
+   Alternativa sin archivo, con un patch:
+
+   kubectl patch deploy tienda -n lab-11 --type=merge -p '{"spec":{"replicas":2,"template":{"metadata":{"annotations":{"prometheus.io/scrape":"true","prometheus.io/port":"8080","prometheus.io/path":"/metrics.txt"}}}}}'
+
+4. Espera ~1 minuto (descubrimiento + 2 scrapes) y consulta:
+
+   promql 'up{app="tienda"}'
+   promql 'sum by (metodo) (rate(tienda_pedidos_total[1m]))'
+   promql 'avg(tienda_carrito_items)'
+
+   Veras 2 series de up con valor 1 (job kubernetes-pods), los pedidos por segundo
+   de "tarjeta" y "efectivo" y el promedio del carrito. Los labels app, namespace,
+   pod y node de cada serie los anaden solas las reglas de relabeling del job.
